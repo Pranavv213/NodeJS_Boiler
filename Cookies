@@ -1,0 +1,14 @@
+//npm install express cookie-parser 
+
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.post('setCookies',(req,res)=>{
+    res.cookie("userData", req.body.name);
+    res.send('cookie set')
+})
+
+app.get('getCookies',(req,res)=>{
+    
+    res.send(req.cookies.userData);
+})
