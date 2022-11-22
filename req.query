@@ -1,0 +1,20 @@
+//create ejs file data1.ejs:-
+
+<body>
+    <form method='get' action='/getData1'>
+        name<input name="name">
+        <button>ok</button>
+    </form>
+</body>
+
+--------------------------------------------------------------------------------
+//come to index.js
+
+app.get('/data1',(req,res)=>{
+    res.render('data1.ejs')
+})
+
+app.get('/getData1',(req,res)=>{
+    const {name}=req.query
+   res.send(name)
+})
