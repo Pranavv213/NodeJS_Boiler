@@ -1,0 +1,32 @@
+//npm install express-validator
+
+const { body, validationResult } = require('express-validator');
+
+
+
+//make an ejs file named as login.ejs:-
+
+<body>
+    <form method='post' action='/userData'>
+        name<input name="name">
+        <button>ok</button>
+    </form>
+</body>
+
+
+
+//come to index.js:-
+
+app.get('/login',(req,res)=>{
+   
+    res.render('login.ejs')
+})
+app.post('/userData',body('name').isLength({ min: 5 }),(req,res)=>{
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.send('Please enter name of length >=5')
+    }
+   
+   res.send(req.body.name)
+})
