@@ -1,0 +1,31 @@
+//npm install ejs
+
+app.use(express.urlencoded({extended:true}))
+app.set('view engine','ejs')
+
+
+//make a folder views and create a file named home.ejs
+
+
+app.get('/hello',(req,res)=>{
+    res.render('hello.ejs')
+})
+
+
+//opereations inside ejs file:-
+
+<body>
+    
+    <%=2%> 
+
+    <%='good'%> 
+
+    <%if(2==2){%>
+        <h1><%='good is good'%></h1>
+    <%}%>
+    
+    <%for(let i=0;i<=10;i++){%>
+        <h1><%=i%></h1>
+
+    <%}%>
+</body>
