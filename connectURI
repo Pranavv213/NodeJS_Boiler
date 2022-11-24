@@ -1,0 +1,28 @@
+//To create a database with Collection <name_of_collection> and database User inside the collection
+//npm install mongoose 
+//npm install mongodb
+//index.js:-
+
+const mongodb= require('mongodb')
+const mongoose=require('mongoose');
+const User = require('./User')
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.eo7nysq.mongodb.net/<name_of_collection>?retryWrites=true&w=majority',{
+    useNewUrlParser:true,
+  
+    useUnifiedTopology:true,
+    
+}).then(()=>{
+    console.log("connected to database")
+}).catch((error)=>{
+    console.log(error.message)
+})
+
+//User.js:-
+
+const mongoose = require('mongoose')
+const userSchema=new mongoose.Schema({
+    username:String,
+    password:String,
+})
+const Users=mongoose.model('Users',userSchema);
+module.exports = Users;
