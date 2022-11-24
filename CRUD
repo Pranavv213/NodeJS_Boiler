@@ -1,0 +1,23 @@
+//Create:-
+
+app.post('/userData',(req,res)=>{
+
+    const {name,password} =req.body
+    User.insertMany({username:name,password:password}).then(()=>{
+        res.send('User Created')
+    }).catch(()=>{
+
+        res.send('error')
+    })
+   
+})
+
+//Read:-
+
+app.get('/fetch',async(req,res)=>{
+
+     const data=await User.find({})
+     res.send(data)
+
+    
+})
