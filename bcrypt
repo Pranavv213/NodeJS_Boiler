@@ -1,0 +1,18 @@
+//npm install bcrypt
+
+const bcrypt=require('bcrypt')
+
+app.post('/userData',async(req,res)=>{
+
+    const {name,password} =req.body
+    const salt=await bcrypt.genSalt(10)
+    const securedPassword=await bcrypt.hash(password,salt)
+    User.insertMany({username:name,password:securedPassword}).then(()=>{
+        res.send('User Created')
+    }).catch(()=>{
+
+        res.send('error')
+    })
+   
+
+})
