@@ -1,0 +1,25 @@
+//npm install mongoose
+//Make a new file User.js:-
+
+const mongoose = require('mongoose')
+const userSchema=new mongoose.Schema({
+    username:String,
+    password:String,
+})
+const Users=mongoose.model('Users',userSchema);
+module.exports = Users;
+
+//index.js:-
+
+const mongoose=require('mongoose');
+const User = require('./User')
+mongoose.connect('mongodb://localhost:27017/superheroes',{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+}).then(()=>{
+    console.log("connected to database")
+}).catch(()=>{
+    console.log("error connecting to database")
+})
+
+
