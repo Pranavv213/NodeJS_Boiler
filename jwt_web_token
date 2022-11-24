@@ -1,0 +1,69 @@
+// npm install jsonwebtoken
+//npm install bcrypt
+//npm install express
+
+var jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+app.post('/login',
+   async (req, res) => {
+    let success = false;
+    // If there are errors, return Bad request and the errors
+   
+  
+    const { name, password } = req.body;
+    try {
+      let user = await User.findOne({ username:name });
+     
+      if (!user) {
+        success = false
+        return res.status(400).json({ error: "Please try to login with correct credentials" });
+      }
+  
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        success = false
+        return res.status(400).json({ success, error: "Please try to login with correct credentials"+user.password });
+      }
+  
+      const data = {
+        user: {
+          id: user.id
+        }
+      }
+      const token = jwt.sign(data, 'secret')
+
+	res.cookie("token", token)
+    res.redirect('/dashboard')
+
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  
+  
+  });
+  const fetchuser =async (req, res, next) => {
+    const token = await req.cookies.token
+    if (!token) {
+        res.status(401).send({ error: "Please authenticate using a valid token1" })
+    }
+    try {
+        // res.send(token)
+        const data = jwt.verify(token, 'secret');
+        req.user = data.user;
+        // res.send(data)
+        userId = req.user.id;
+        // const user = await User.findById(userId).select("-password")
+        next();
+    } catch (error) {
+        res.status(401).send({ error: "Please authenticate using a valid token" })
+    }
+
+}
+app.get('/dashboard', fetchuser,  async (req, res) => {
+
+    res.send("hello ")
+  })  
